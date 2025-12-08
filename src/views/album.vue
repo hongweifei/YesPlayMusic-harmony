@@ -332,11 +332,22 @@ export default {
 <style lang="scss" scoped>
 .album-page {
   margin-top: 32px;
+
+  @media (max-width: 767px) {
+    margin-top: 16px;
+  }
 }
 .playlist-info {
   display: flex;
   width: 78vw;
   margin-bottom: 72px;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
   .info {
     display: flex;
     flex-direction: column;
@@ -344,18 +355,38 @@ export default {
     flex: 1;
     margin-left: 56px;
     color: var(--color-text);
+
+    @media (max-width: 767px) {
+      margin-left: 0;
+      margin-top: 16px;
+    }
+
     .title {
       font-size: 56px;
       font-weight: 700;
+
+      @media (max-width: 767px) {
+        font-size: 24px;
+      }
     }
     .subtitle {
       font-size: 22px;
       font-weight: 600;
+
+      @media (max-width: 767px) {
+        font-size: 16px;
+      }
     }
     .artist {
       font-size: 18px;
       opacity: 0.88;
       margin-top: 24px;
+
+      @media (max-width: 767px) {
+        font-size: 14px;
+        margin-top: 12px;
+      }
+
       a {
         font-weight: 600;
       }
@@ -364,6 +395,10 @@ export default {
       font-size: 14px;
       opacity: 0.68;
       margin-top: 2px;
+
+      @media (max-width: 767px) {
+        font-size: 12px;
+      }
     }
     .description {
       user-select: none;
@@ -376,6 +411,13 @@ export default {
       overflow: hidden;
       cursor: pointer;
       white-space: pre-line;
+
+      @media (max-width: 767px) {
+        font-size: 13px;
+        margin-top: 12px;
+        -webkit-line-clamp: 2;
+      }
+
       &:hover {
         transition: opacity 0.3s;
         opacity: 0.88;
@@ -384,8 +426,19 @@ export default {
     .buttons {
       margin-top: 32px;
       display: flex;
+
+      @media (max-width: 767px) {
+        margin-top: 16px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
       button {
         margin-right: 16px;
+
+        @media (max-width: 767px) {
+          margin-right: 0;
+        }
       }
     }
   }
@@ -409,6 +462,13 @@ export default {
   font-size: 12px;
   opacity: 0.48;
   color: var(--color-text);
+
+  @media (max-width: 767px) {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    font-size: 11px;
+  }
+
   div {
     margin-bottom: 4px;
   }
@@ -419,14 +479,23 @@ export default {
 
 .more-by {
   border-top: 1px solid rgba(128, 128, 128, 0.18);
-
   padding-top: 22px;
+
+  @media (max-width: 767px) {
+    padding-top: 16px;
+  }
+
   .section-title {
     font-size: 22px;
     font-weight: 600;
     opacity: 0.88;
     color: var(--color-text);
     margin-bottom: 20px;
+
+    @media (max-width: 767px) {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
   }
 }
 .description-fulltext {

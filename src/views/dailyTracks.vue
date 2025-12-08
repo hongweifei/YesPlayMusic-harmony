@@ -64,6 +64,12 @@ export default {
   border-radius: 1.25em;
   text-align: center;
 
+  @media (max-width: 767px) {
+    margin-top: 32px;
+    margin-bottom: 48px;
+    border-radius: 1em;
+  }
+
   @keyframes letterSpacing4 {
     from {
       letter-spacing: 0px;
@@ -95,6 +101,12 @@ export default {
     animation-name: letterSpacing4;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+
+    @media (max-width: 767px) {
+      font-size: 48px;
+      letter-spacing: 2px;
+    }
+
     // background-image: linear-gradient(
     //   225deg,
     //   var(--color-primary),
@@ -105,6 +117,11 @@ export default {
       height: 78px;
       border-radius: 0.125em;
       margin-right: 24px;
+
+      @media (max-width: 767px) {
+        height: 48px;
+        margin-right: 12px;
+      }
     }
   }
   .subtitle {
@@ -115,13 +132,30 @@ export default {
     animation-name: letterSpacing1;
     text-transform: uppercase;
     color: var(--color-text);
+
+    @media (max-width: 767px) {
+      font-size: 14px;
+      margin: 16px 0 32px 0;
+      letter-spacing: 0.5px;
+    }
   }
   .buttons {
     margin-top: 32px;
     display: flex;
     justify-content: center;
+
+    @media (max-width: 767px) {
+      margin-top: 24px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
     button {
       margin-right: 16px;
+
+      @media (max-width: 767px) {
+        margin-right: 0;
+      }
     }
   }
 }

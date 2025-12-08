@@ -940,6 +940,12 @@ export default {
   margin-right: 24px;
   z-index: 0;
 
+  @media (max-width: 767px) {
+    margin-right: 0;
+    width: 100%;
+    padding: 0 16px;
+  }
+
   .lyrics-container {
     height: 100%;
     display: flex;
@@ -950,11 +956,23 @@ export default {
     transition: 0.5s;
     scrollbar-width: none; // firefox
 
+    @media (max-width: 767px) {
+      padding-left: 0;
+      max-width: 100%;
+    }
+
     .line {
       margin: 2px 0;
       padding: 12px 18px;
       transition: 0.5s;
       border-radius: 12px;
+
+      @media (max-width: 767px) {
+        margin: 8px 0;
+        padding: 10px 12px;
+        font-size: 18px;
+        line-height: 1.6;
+      }
 
       &:hover {
         background: var(--color-secondary-bg-for-transparent);
@@ -1007,10 +1025,18 @@ export default {
 
   .lyrics-container .line:first-child {
     margin-top: 50vh;
+
+    @media (max-width: 767px) {
+      margin-top: 20vh;
+    }
   }
 
   .lyrics-container .line:last-child {
     margin-bottom: calc(50vh - 128px);
+
+    @media (max-width: 767px) {
+      margin-bottom: calc(20vh - 60px);
+    }
   }
 }
 
@@ -1029,11 +1055,23 @@ export default {
   transition: 0.2s;
   -webkit-app-region: no-drag;
 
+  @media (max-width: 767px) {
+    top: calc(16px + env(safe-area-inset-top, 0));
+    right: 16px;
+    height: 40px;
+    width: 40px;
+  }
+
   .svg-icon {
     color: var(--color-text);
     padding-top: 5px;
     height: 22px;
     width: 22px;
+
+    @media (max-width: 767px) {
+      height: 20px;
+      width: 20px;
+    }
   }
 
   &:hover {
@@ -1062,6 +1100,26 @@ export default {
 @media screen and (min-width: 1200px) {
   .right-side .lyrics-container {
     max-width: 600px;
+  }
+}
+
+// 移动端适配
+@media (max-width: 767px) {
+  .lyrics-page {
+    padding-top: env(safe-area-inset-top, 0);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  .left-side {
+    display: none;
+  }
+
+  .right-side .lyrics-container .line.highlight {
+    font-size: 22px !important;
+
+    @media (max-width: 767px) {
+      font-size: 20px !important;
+    }
   }
 }
 

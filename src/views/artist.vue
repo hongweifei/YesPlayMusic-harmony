@@ -372,6 +372,12 @@ export default {
 <style lang="scss" scoped>
 .artist-page {
   margin-top: 32px;
+  width: 100%;
+  overflow-x: hidden;
+
+  @media (max-width: 767px) {
+    margin-top: 16px;
+  }
 }
 
 .artist-info {
@@ -379,33 +385,69 @@ export default {
   align-items: center;
   margin-bottom: 26px;
   color: var(--color-text);
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+
   img {
     height: 248px;
     width: 248px;
     border-radius: 50%;
     margin-right: 56px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 16px -8px;
+
+    @media (max-width: 767px) {
+      height: 160px;
+      width: 160px;
+      margin-right: 0;
+      margin-bottom: 16px;
+      align-self: center;
+    }
   }
   .name {
     font-size: 56px;
     font-weight: 700;
+
+    @media (max-width: 767px) {
+      font-size: 28px;
+    }
   }
 
   .artist {
     font-size: 18px;
     opacity: 0.88;
     margin-top: 24px;
+
+    @media (max-width: 767px) {
+      font-size: 14px;
+      margin-top: 8px;
+    }
   }
 
   .statistics {
     font-size: 14px;
     opacity: 0.68;
     margin-top: 2px;
+
+    @media (max-width: 767px) {
+      font-size: 12px;
+    }
   }
 
   .buttons {
     margin-top: 26px;
     display: flex;
+
+    @media (max-width: 767px) {
+      margin-top: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+      width: 100%;
+    }
+
     .shuffle {
       padding: 8px 11px;
       .svg-icon {
@@ -425,6 +467,12 @@ export default {
     overflow: hidden;
     cursor: pointer;
     white-space: pre-line;
+
+    @media (max-width: 767px) {
+      font-size: 13px;
+      margin-top: 12px;
+    }
+
     &:hover {
       transition: opacity 0.3s;
       opacity: 0.88;
@@ -440,6 +488,12 @@ export default {
   margin-bottom: 16px;
   padding-top: 46px;
 
+  @media (max-width: 767px) {
+    font-size: 18px;
+    padding-top: 32px;
+    margin-bottom: 12px;
+  }
+
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -447,46 +501,92 @@ export default {
     font-size: 13px;
     font-weight: 600;
     opacity: 0.68;
+
+    @media (max-width: 767px) {
+      font-size: 12px;
+    }
   }
 }
 
 .latest-release {
   color: var(--color-text);
+
   .release {
     display: flex;
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+      gap: 16px;
+    }
   }
   .container {
     display: flex;
     flex: 1;
     align-items: center;
     border-radius: 12px;
+
+    @media (max-width: 767px) {
+      flex: none;
+    }
   }
   img {
     height: 96px;
     border-radius: 8px;
+
+    @media (max-width: 767px) {
+      height: 80px;
+    }
   }
   .info {
     margin-left: 24px;
+
+    @media (max-width: 767px) {
+      margin-left: 12px;
+    }
   }
   .name {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 8px;
+
+    @media (max-width: 767px) {
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
   }
   .date {
     font-size: 14px;
     opacity: 0.78;
+
+    @media (max-width: 767px) {
+      font-size: 12px;
+    }
   }
   .type {
     margin-top: 2px;
     font-size: 12px;
     opacity: 0.68;
+
+    @media (max-width: 767px) {
+      font-size: 11px;
+    }
   }
 }
 
 .popular-tracks {
+  width: 100%;
+  overflow-x: hidden;
+
+  @media (max-width: 767px) {
+    margin-top: 24px;
+  }
+
   .show-more {
     display: flex;
+
+    @media (max-width: 767px) {
+      margin-top: 12px;
+    }
 
     button {
       padding: 4px 8px;
@@ -496,6 +596,13 @@ export default {
       opacity: 0.78;
       color: var(--color-secondary);
       font-weight: 600;
+
+      @media (max-width: 767px) {
+        padding: 6px 12px;
+        min-height: 36px;
+        font-size: 13px;
+      }
+
       &:hover {
         opacity: 1;
       }
@@ -503,9 +610,27 @@ export default {
   }
 }
 
+.albums,
+.mvs,
+.eps {
+  width: 100%;
+  overflow-x: hidden;
+
+  @media (max-width: 767px) {
+    margin-top: 20px;
+  }
+}
+
 .similar-artists {
+  width: 100%;
+  overflow-x: hidden;
+
   .section-title {
     margin-bottom: 24px;
+
+    @media (max-width: 767px) {
+      margin-bottom: 16px;
+    }
   }
 }
 

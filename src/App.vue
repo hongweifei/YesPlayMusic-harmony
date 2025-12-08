@@ -7,6 +7,24 @@
       :style="{ overflow: enableScrolling ? 'auto' : 'hidden' }"
       @scroll="handleScroll"
     >
+      <!-- 移动端搜索栏（在首页、发现页和搜索页显示） -->
+      <div v-if="showMobileSearchBar" class="mobile-search-bar">
+        <!-- 返回按钮（仅在搜索页显示） -->
+        <button v-if="showBackButton" class="back-button" @click="goBack">
+          <svg-icon icon-class="arrow-left" />
+        </button>
+        <div class="search-input-container">
+          <svg-icon icon-class="search" />
+          <input
+            ref="mobileSearchInput"
+            v-model="searchKeywords"
+            type="search"
+            :placeholder="$t('nav.search')"
+            @keydown.enter="doSearch"
+          />
+        </div>
+      </div>
+
       <keep-alive>
         <router-view v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>
@@ -41,6 +59,7 @@ import Scrollbar from './components/Scrollbar.vue';
 import Navbar from './components/Navbar.vue';
 import Player from './components/Player.vue';
 import Toast from './components/Toast.vue';
+import SvgIcon from './components/SvgIcon.vue';
 import { ipcRenderer } from './electron/ipcRenderer';
 import { isAccountLoggedIn, isLooseLoggedIn } from '@/utils/auth';
 import Lyrics from './views/lyrics.vue';
@@ -56,12 +75,14 @@ export default {
     ModalNewPlaylist,
     Lyrics,
     Scrollbar,
+    SvgIcon,
   },
   data() {
     return {
       isElectron: process.env.IS_ELECTRON, // true || undefined
       userSelectNone: false,
       showApiConnectionFailed: false,
+      searchKeywords: '',
     };
   },
   computed: {
@@ -86,6 +107,14 @@ export default {
     showNavbar() {
       return this.$route.name !== 'lastfmCallback';
     },
+    // 移动端搜索栏显示条件：在首页、发现页和搜索页显示
+    showMobileSearchBar() {
+      return ['home', 'explore', 'search'].includes(this.$route.name);
+    },
+    // 是否显示返回按钮（仅在搜索页显示）
+    showBackButton() {
+      return this.$route.name === 'search';
+    },
   },
   watch: {
     $route(to) {
@@ -93,6 +122,8 @@ export default {
       if (to.name === 'settings') {
         this.showApiConnectionFailed = false;
       }
+      // 同步搜索关键词
+      this.syncSearchKeywords();
     },
   },
   created() {
@@ -104,6 +135,7 @@ export default {
       this.handleApiConnectionFailed
     );
     this.fetchData();
+    this.syncSearchKeywords();
   },
   beforeDestroy() {
     // 清理事件监听器
@@ -157,6 +189,36 @@ export default {
         this.$router.push({ name: 'settings' });
       }
     },
+    doSearch() {
+      if (!this.searchKeywords) return;
+      if (
+        this.$route.name === 'search' &&
+        this.$route.params.keywords === this.searchKeywords
+      ) {
+        return;
+      }
+      this.$router.push({
+        name: 'search',
+        params: { keywords: this.searchKeywords },
+      });
+    },
+    // 监听路由变化，同步搜索关键词
+    syncSearchKeywords() {
+      if (this.$route.name === 'search') {
+        this.searchKeywords = this.$route.params.keywords ?? '';
+      } else if (['home', 'explore'].includes(this.$route.name)) {
+        // 在首页和发现页，清空搜索关键词
+        this.searchKeywords = '';
+      }
+    },
+    goBack() {
+      // 返回上一页，如果没有历史记录则返回首页
+      if (window.history.length > 1) {
+        this.$router.go(-1);
+      } else {
+        this.$router.push({ name: 'home' });
+      }
+    },
   },
 };
 </script>
@@ -177,11 +239,99 @@ main {
   padding: 64px 10vw 96px 10vw;
   box-sizing: border-box;
   scrollbar-width: none; // firefox
+  -webkit-overflow-scrolling: touch; // 移动端滚动优化
 }
 
 @media (max-width: 1336px) {
   main {
     padding: 64px 5vw 96px 5vw;
+  }
+}
+
+// 移动端搜索栏样式
+.mobile-search-bar {
+  display: none;
+
+  @media (max-width: 767px) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding-top: calc(12px + env(safe-area-inset-top, 0));
+    margin-bottom: 16px;
+
+    .back-button {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-secondary-bg-for-transparent);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      color: var(--color-text);
+      transition: all 0.2s;
+
+      &:active {
+        opacity: 0.6;
+        transform: scale(0.95);
+      }
+
+      .svg-icon {
+        width: 20px;
+        height: 20px;
+        color: inherit;
+      }
+    }
+
+    .search-input-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: var(--color-secondary-bg-for-transparent);
+      border-radius: 12px;
+      padding: 10px 14px;
+      gap: 10px;
+      min-height: 1.5rem;
+
+      .svg-icon {
+        width: 18px;
+        height: 18px;
+        color: var(--color-secondary);
+        flex-shrink: 0;
+      }
+
+      input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        font-size: 15px;
+        color: var(--color-text);
+        font-weight: 500;
+        line-height: 1.5;
+
+        &::placeholder {
+          color: var(--color-secondary);
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+}
+
+// 移动端布局调整
+@media (max-width: 767px) {
+  main {
+    padding: 0 16px 120px 16px; // 底部为播放器(60px)+底部导航栏(60px)预留空间
+    padding-top: env(safe-area-inset-top, 0); // 适配刘海屏
+    padding-bottom: calc(
+      120px + env(safe-area-inset-bottom, 0)
+    ); // 底部安全区域
   }
 }
 
@@ -206,6 +356,14 @@ main::-webkit-scrollbar {
   z-index: 1020;
   cursor: pointer;
   animation: slideDown 0.3s ease-out;
+
+  @media (max-width: 767px) {
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    transform: none;
+    width: auto;
+  }
 }
 
 .notice-content {
@@ -221,6 +379,14 @@ main::-webkit-scrollbar {
   border: 1px solid rgba(255, 255, 255, 0.2);
   min-width: 320px;
   max-width: 600px;
+
+  @media (max-width: 767px) {
+    min-width: auto;
+    max-width: 100%;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
 }
 
 .notice-text {

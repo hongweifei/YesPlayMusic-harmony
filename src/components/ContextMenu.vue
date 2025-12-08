@@ -32,11 +32,47 @@ export default {
   methods: {
     setMenu(top, left) {
       let heightOffset = this.player.enabled ? 64 : 0;
+      // 移动端需要考虑底部导航栏高度（60px）和播放器高度
+      const isMobile = window.innerWidth <= 767;
+      if (isMobile) {
+        heightOffset += 60; // 底部导航栏高度
+        if (this.player.enabled) {
+          heightOffset += 60; // 移动端播放器高度
+        }
+      }
       let largestHeight =
         window.innerHeight - this.$refs.menu.offsetHeight - heightOffset;
       let largestWidth = window.innerWidth - this.$refs.menu.offsetWidth - 25;
-      if (top > largestHeight) top = largestHeight;
-      if (left > largestWidth) left = largestWidth;
+
+      // 移动端菜单显示在底部导航栏上方
+      if (isMobile && this.$refs.menu) {
+        // 确保菜单不会超出屏幕顶部
+        const menuHeight = this.$refs.menu.offsetHeight || 200;
+        const minTop = 10; // 距离顶部最小距离
+        const maxTop = window.innerHeight - menuHeight - heightOffset - 10;
+
+        // 如果计算的位置在按钮上方，确保不会超出屏幕
+        if (top > maxTop) {
+          top = maxTop;
+        }
+        if (top < minTop) {
+          top = minTop;
+        }
+
+        // 菜单水平居中显示
+        left = left - this.$refs.menu.offsetWidth / 2;
+
+        // 确保菜单不会超出屏幕左右边界
+        if (left < 10) left = 10;
+        if (left + this.$refs.menu.offsetWidth > window.innerWidth - 10) {
+          left = window.innerWidth - this.$refs.menu.offsetWidth - 10;
+        }
+      } else {
+        // 桌面端原有逻辑
+        if (top > largestHeight) top = largestHeight;
+        if (left > largestWidth) left = largestWidth;
+      }
+
       this.top = top + 'px';
       this.left = left + 'px';
     },
@@ -87,6 +123,13 @@ export default {
   -webkit-app-region: no-drag;
   transition: background 125ms ease-out, opacity 125ms ease-out,
     transform 125ms ease-out;
+
+  // 移动端菜单样式优化
+  @media (max-width: 767px) {
+    min-width: 180px;
+    max-width: 280px;
+    z-index: 101; // 确保在底部导航栏上方，但在其他内容下方
+  }
 
   &:focus {
     outline: none;

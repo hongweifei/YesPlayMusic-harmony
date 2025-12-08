@@ -1,5 +1,5 @@
 <template>
-  <div class="cover-row" :style="rowStyles">
+  <div class="cover-row" :style="rowStyles" :data-column-number="columnNumber">
     <div
       v-for="item in items"
       :key="item.id"
@@ -120,6 +120,9 @@ export default {
 <style lang="scss" scoped>
 .cover-row {
   display: grid;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .item {
@@ -164,6 +167,54 @@ export default {
 @media (max-width: 834px) {
   .item .text .title {
     font-size: 14px;
+  }
+}
+
+// 移动端优化 - 自动调整列数
+@media (max-width: 767px) {
+  .cover-row {
+    // 移动端统一显示为3列，增加间距
+    gap: 20px 12px !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .item {
+    .text {
+      margin-top: 6px;
+      .title {
+        font-size: 13px;
+        line-height: 18px;
+        margin-bottom: 2px;
+      }
+      .info {
+        font-size: 11px;
+        line-height: 16px;
+        margin-top: 2px;
+      }
+    }
+  }
+}
+
+// 小屏移动端进一步优化
+@media (max-width: 480px) {
+  .cover-row {
+    // 小屏移动端显示为2列，保持合适的间距
+    gap: 18px 10px !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .item {
+    .text {
+      margin-top: 5px;
+      .title {
+        font-size: 12px;
+        line-height: 16px;
+      }
+      .info {
+        font-size: 10px;
+        line-height: 14px;
+      }
+    }
   }
 }
 

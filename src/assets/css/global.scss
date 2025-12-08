@@ -73,8 +73,12 @@ body {
 
 html {
   overflow-y: var(--html-overflow-y);
-  min-width: 768px;
   overscroll-behavior: none;
+  
+  // 桌面端最小宽度限制
+  @media (min-width: 768px) {
+    min-width: 768px;
+  }
 }
 
 select,
@@ -132,4 +136,55 @@ a {
 
 .user-select-none {
   user-select: none;
+}
+
+// 移动端基础样式
+@media (max-width: 767px) {
+  // 移动端字体大小优化
+  body {
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  // 移动端触摸优化
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  // 移动端滚动优化
+  main {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  // 移动端按钮触摸区域优化
+  button,
+  a,
+  .clickable {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  // 移动端禁用文本选择（某些区域）
+  .no-select {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+  
+  // 移动端滚动条隐藏
+  ::-webkit-scrollbar {
+    width: 0px;
+    display: none;
+  }
+  
+  // 移动端输入框优化
+  input,
+  textarea {
+    font-size: 16px; // 防止iOS自动缩放
+  }
 }

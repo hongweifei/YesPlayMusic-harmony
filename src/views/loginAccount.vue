@@ -305,6 +305,11 @@ export default {
   align-items: center;
   justify-content: center;
   margin-top: 32px;
+
+  @media (max-width: 767px) {
+    margin-top: 16px;
+    padding: 20px;
+  }
 }
 
 .login-container {
@@ -312,6 +317,10 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 }
 
 .title {
@@ -319,16 +328,31 @@ export default {
   font-weight: 700;
   margin-bottom: 48px;
   color: var(--color-text);
+
+  @media (max-width: 767px) {
+    font-size: 20px;
+    margin-bottom: 32px;
+  }
 }
 
 .section-1 {
   margin-bottom: 16px;
   display: flex;
   align-items: center;
+
+  @media (max-width: 767px) {
+    margin-bottom: 24px;
+  }
+
   img {
     height: 64px;
     margin: 20px;
     user-select: none;
+
+    @media (max-width: 767px) {
+      height: 48px;
+      margin: 12px;
+    }
   }
 }
 
@@ -344,6 +368,11 @@ export default {
   margin-bottom: 16px;
   color: var(--color-text);
 
+  @media (max-width: 767px) {
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
   .container {
     display: flex;
     align-items: center;
@@ -351,6 +380,11 @@ export default {
     background: var(--color-secondary-bg);
     border-radius: 8px;
     width: 300px;
+
+    @media (max-width: 767px) {
+      width: 100%;
+      height: 44px;
+    }
   }
 
   .svg-icon {
@@ -376,6 +410,10 @@ export default {
     font-weight: 600;
     margin-top: -1px;
     color: var(--color-text);
+
+    @media (max-width: 767px) {
+      font-size: 16px;
+    }
   }
 
   input::placeholder {
@@ -413,6 +451,14 @@ export default {
   padding: 8px;
   width: 100%;
   width: 300px;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    font-size: 16px;
+    margin-top: 20px;
+    min-height: 44px;
+  }
+
   &:hover {
     transform: scale(1.06);
   }
@@ -426,6 +472,13 @@ export default {
   font-size: 13px;
   color: var(--color-text);
   opacity: 0.68;
+
+  @media (max-width: 767px) {
+    margin-top: 20px;
+    font-size: 12px;
+    text-align: center;
+  }
+
   a {
     padding: 0 8px;
   }
@@ -439,6 +492,12 @@ export default {
   font-size: 12px;
   color: var(--color-text);
   opacity: 0.48;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    margin-top: 32px;
+    font-size: 11px;
+  }
 }
 
 @keyframes loading {

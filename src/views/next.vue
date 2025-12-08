@@ -121,6 +121,15 @@ h1 {
   color: var(--color-text);
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 767px) {
+    margin-top: 24px;
+    margin-bottom: 12px;
+    font-size: 20px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
   button {
     color: var(--color-text);
     border-radius: 8px;
@@ -131,6 +140,13 @@ h1 {
     transition: 0.2s;
     opacity: 0.68;
     font-weight: 500;
+
+    @media (max-width: 767px) {
+      padding: 0 12px;
+      min-height: 36px;
+      font-size: 14px;
+    }
+
     &:hover {
       opacity: 1;
       background: var(--color-secondary-bg);

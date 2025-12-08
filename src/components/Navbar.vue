@@ -1,6 +1,10 @@
 <template>
   <div>
-    <nav :class="{ 'has-custom-titlebar': hasCustomTitlebar }">
+    <!-- 桌面端顶部导航 -->
+    <nav
+      class="desktop-nav"
+      :class="{ 'has-custom-titlebar': hasCustomTitlebar }"
+    >
       <Win32Titlebar v-if="enableWin32Titlebar" />
       <LinuxTitlebar v-if="enableLinuxTitlebar" />
       <div class="navigation-buttons">
@@ -46,11 +50,119 @@
         <img
           class="avatar"
           :src="avatarUrl"
-          @click="showUserProfileMenu"
           loading="lazy"
+          @click="showUserProfileMenu"
         />
       </div>
     </nav>
+
+    <!-- 移动端底部导航 -->
+    <nav class="mobile-nav">
+      <router-link
+        to="/"
+        class="nav-item"
+        :class="{ active: $route.name === 'home' }"
+      >
+        <div class="nav-icon-wrapper">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 20V14H14V20H19V12H22L12 3L2 12H5V20H10Z"
+              fill="currentColor"
+            />
+          </svg>
+        </div>
+        <span class="nav-label">{{ $t('nav.home') }}</span>
+      </router-link>
+      <router-link
+        to="/explore"
+        class="nav-item"
+        :class="{ active: $route.name === 'explore' }"
+      >
+        <div class="nav-icon-wrapper">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"
+              fill="currentColor"
+            />
+          </svg>
+        </div>
+        <span class="nav-label">{{ $t('nav.explore') }}</span>
+      </router-link>
+      <router-link
+        to="/library"
+        class="nav-item"
+        :class="{ active: $route.name === 'library' }"
+      >
+        <div class="nav-icon-wrapper">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4 6H2V20C2 21.1 2.9 22 4 22H18V20H4V6ZM20 2H8C6.9 2 6 2.9 6 4V16C6 17.1 6.9 18 8 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H8V4H20V16Z"
+              fill="currentColor"
+            />
+          </svg>
+        </div>
+        <span class="nav-label">{{ $t('nav.library') }}</span>
+      </router-link>
+      <router-link
+        to="/settings"
+        class="nav-item user-nav-item"
+        :class="{ active: $route.name === 'settings' }"
+      >
+        <div class="nav-icon-wrapper">
+          <img
+            v-if="isLooseLoggedIn"
+            class="nav-avatar"
+            :src="avatarUrl"
+            alt="User"
+          />
+          <svg-icon v-else icon-class="settings" class="nav-icon" />
+        </div>
+        <span class="nav-label">{{
+          isLooseLoggedIn
+            ? $t('nav.user')
+            : $t('library.userProfileMenu.settings')
+        }}</span>
+      </router-link>
+    </nav>
+
+    <!-- 移动端搜索框 -->
+    <div
+      v-if="showMobileSearchBox"
+      class="mobile-search-overlay"
+      @click="hideMobileSearch"
+    >
+      <div class="mobile-search-box" @click.stop>
+        <div class="search-input-container">
+          <svg-icon icon-class="search" />
+          <input
+            ref="mobileSearchInput"
+            v-model="keywords"
+            type="search"
+            :placeholder="$t('nav.search')"
+            @keydown.enter="doSearch"
+            @blur="hideMobileSearch"
+          />
+        </div>
+      </div>
+    </div>
 
     <ContextMenu ref="userProfileMenu">
       <div class="item" @click="toSettings">
@@ -102,6 +214,7 @@ export default {
       keywords: '',
       enableWin32Titlebar: false,
       enableLinuxTitlebar: false,
+      showMobileSearchBox: false,
     };
   },
   computed: {
@@ -141,10 +254,41 @@ export default {
       ) {
         return;
       }
+      this.hideMobileSearch();
       this.$router.push({
         name: 'search',
         params: { keywords: this.keywords },
       });
+    },
+    showMobileSearch() {
+      this.showMobileSearchBox = true;
+      this.$nextTick(() => {
+        if (this.$refs.mobileSearchInput) {
+          this.$refs.mobileSearchInput.focus();
+        }
+      });
+    },
+    hideMobileSearch() {
+      this.showMobileSearchBox = false;
+    },
+    showMobileUserMenu(e) {
+      // 移动端显示用户菜单，位置在底部导航栏上方
+      if (window.innerWidth <= 767) {
+        e.preventDefault();
+        e.stopPropagation();
+        // 创建一个虚拟事件对象，位置在底部导航栏上方
+        const rect = e.currentTarget.getBoundingClientRect();
+        const menuHeight = 200; // 预估菜单高度
+        const fakeEvent = {
+          y: rect.top - menuHeight - 10, // 在按钮上方，留出菜单空间
+          x: rect.left + rect.width / 2, // 按钮中心位置
+          preventDefault: () => {},
+          stopPropagation: () => {},
+        };
+        this.$refs.userProfileMenu.openMenu(fakeEvent);
+      } else {
+        this.showUserProfileMenu(e);
+      }
     },
     showUserProfileMenu(e) {
       this.$refs.userProfileMenu.openMenu(e);
@@ -172,7 +316,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-nav {
+// 桌面端导航
+.desktop-nav {
   position: fixed;
   top: 0;
   right: 0;
@@ -190,26 +335,188 @@ nav {
   background-color: var(--color-navbar-bg);
   z-index: 100;
   -webkit-app-region: drag;
+
+  // 移动端隐藏桌面导航
+  @media (max-width: 767px) {
+    display: none;
+  }
 }
 
+// 移动端底部导航
+.mobile-nav {
+  display: none;
+
+  @media (max-width: 767px) {
+    display: flex;
+    position: fixed;
+    top: auto; // 明确覆盖任何可能的 top 设置
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: var(--color-navbar-bg);
+    backdrop-filter: saturate(180%) blur(20px);
+    border-top: 1px solid var(--color-secondary-bg);
+    z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 4px;
+      color: var(--color-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+      min-height: 60px;
+
+      .nav-icon-wrapper {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 4px;
+
+        svg {
+          width: 24px;
+          height: 24px;
+          color: inherit;
+          fill: currentColor;
+        }
+
+        .nav-icon {
+          width: 24px;
+          height: 24px;
+          color: inherit;
+
+          ::v-deep svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+          }
+        }
+      }
+
+      .nav-label {
+        font-size: 11px;
+        font-weight: 500;
+        text-transform: none;
+      }
+
+      &.active {
+        color: var(--color-primary);
+      }
+
+      &:active {
+        opacity: 0.6;
+      }
+    }
+
+    .user-nav-item {
+      cursor: pointer;
+
+      .nav-avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+// 移动端搜索框（覆盖层）
+.mobile-search-overlay {
+  display: none;
+
+  @media (max-width: 767px) {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 200;
+    animation: fadeIn 0.2s;
+  }
+}
+
+.mobile-search-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--color-navbar-bg);
+  backdrop-filter: saturate(180%) blur(20px);
+  padding: 16px;
+  padding-top: calc(16px + env(safe-area-inset-top, 0));
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+  .search-input-container {
+    display: flex;
+    align-items: center;
+    background: var(--color-secondary-bg-for-transparent);
+    border-radius: 12px;
+    padding: 12px 16px;
+    gap: 12px;
+
+    .svg-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--color-secondary);
+      flex-shrink: 0;
+    }
+
+    input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 16px;
+      color: var(--color-text);
+      font-weight: 500;
+
+      &::placeholder {
+        color: var(--color-secondary);
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// 通用 nav 样式已移到 .desktop-nav，避免影响 .mobile-nav
+
 @media (max-width: 1336px) {
-  nav {
+  .desktop-nav {
     padding: 0 max(5vw, 90px);
   }
 }
 
 @supports (-moz-appearance: none) {
-  nav {
+  .desktop-nav,
+  .mobile-nav {
     background-color: var(--color-body-bg);
   }
 }
 
-nav.has-custom-titlebar {
+.desktop-nav.has-custom-titlebar {
   padding-top: 20px;
   -webkit-app-region: no-drag;
 }
 
-.navigation-buttons {
+.desktop-nav .navigation-buttons {
   flex: 1;
   display: flex;
   align-items: center;
@@ -222,12 +529,12 @@ nav.has-custom-titlebar {
   }
 }
 @media (max-width: 970px) {
-  .navigation-buttons {
+  .desktop-nav .navigation-buttons {
     flex: unset;
   }
 }
 
-.navigation-links {
+.desktop-nav .navigation-links {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -267,7 +574,7 @@ nav.has-custom-titlebar {
   }
 }
 
-.search-box {
+.desktop-nav .search-box {
   display: flex;
   justify-content: flex-end;
   -webkit-app-region: no-drag;
@@ -323,7 +630,7 @@ nav.has-custom-titlebar {
   }
 }
 
-.right-part {
+.desktop-nav .right-part {
   flex: 1;
   display: flex;
   align-items: center;

@@ -60,7 +60,7 @@
       >
     </ContextMenu>
 
-    <div :style="listStyles">
+    <div :style="computedListStyles" class="track-list-container">
       <TrackListItem
         v-for="(track, index) in tracks"
         :key="itemKey === 'id' ? track.id : `${track.id}${index}`"
@@ -169,14 +169,21 @@ export default {
           }
         : this.rightClickedTrack;
     },
+    computedListStyles() {
+      if (this.type === 'tracklist') {
+        return {
+          display: 'grid',
+          gap: '4px',
+          gridTemplateColumns: `repeat(${this.columnNumber}, 1fr)`,
+          '--column-number': this.columnNumber,
+        };
+      }
+      return {};
+    },
   },
   created() {
     if (this.type === 'tracklist') {
-      this.listStyles = {
-        display: 'grid',
-        gap: '4px',
-        gridTemplateColumns: `repeat(${this.columnNumber}, 1fr)`,
-      };
+      this.listStyles = this.computedListStyles;
     }
   },
   methods: {
@@ -309,4 +316,20 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.track-list-container {
+  // 移动端确保不超出容器宽度，并调整为2列
+  @media (max-width: 767px) {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  // 小屏移动端（宽度小于480px）显示为单列
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>

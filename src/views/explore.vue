@@ -1,5 +1,5 @@
 <template>
-  <div class="explore-page">
+  <div class="explore-page" style="width: 100%; overflow-x: hidden">
     <h1>{{ $t('explore.explore') }}</h1>
     <div class="buttons">
       <div
@@ -72,14 +72,12 @@ import { getRecommendPlayList } from '@/utils/playList';
 
 import ButtonTwoTone from '@/components/ButtonTwoTone.vue';
 import CoverRow from '@/components/CoverRow.vue';
-import SvgIcon from '@/components/SvgIcon.vue';
 
 export default {
   name: 'Explore',
   components: {
     CoverRow,
     ButtonTwoTone,
-    SvgIcon,
   },
   beforeRouteUpdate(to, from, next) {
     this.showLoadMoreButton = false;
@@ -197,10 +195,18 @@ export default {
 h1 {
   color: var(--color-text);
   font-size: 56px;
+
+  @media (max-width: 767px) {
+    font-size: 28px;
+  }
 }
 .buttons {
   display: flex;
   flex-wrap: wrap;
+
+  @media (max-width: 767px) {
+    gap: 8px;
+  }
 }
 .button {
   user-select: none;
@@ -216,6 +222,13 @@ h1 {
   background-color: var(--color-secondary-bg);
   color: var(--color-secondary);
   transition: 0.2s;
+
+  @media (max-width: 767px) {
+    padding: 6px 12px;
+    margin: 0;
+    font-size: 14px;
+    border-radius: 8px;
+  }
 
   &:hover {
     background-color: var(--color-primary-bg);
@@ -233,9 +246,19 @@ h1 {
   padding: 8px;
   color: var(--color-text);
 
+  @media (max-width: 767px) {
+    padding: 12px;
+    border-radius: 8px;
+  }
+
   .big-cat {
     display: flex;
     margin-bottom: 32px;
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+      margin-bottom: 24px;
+    }
   }
 
   .name {
@@ -246,11 +269,22 @@ h1 {
     min-width: 54px;
     height: 26px;
     margin-top: 8px;
+
+    @media (max-width: 767px) {
+      font-size: 18px;
+      margin-left: 0;
+      margin-bottom: 8px;
+    }
   }
   .cats {
     margin-left: 24px;
     display: flex;
     flex-wrap: wrap;
+
+    @media (max-width: 767px) {
+      margin-left: 0;
+      gap: 6px;
+    }
   }
   .cat {
     user-select: none;
@@ -263,6 +297,12 @@ h1 {
     transition: 0.2s;
     min-width: 98px;
 
+    @media (max-width: 767px) {
+      font-size: 14px;
+      min-width: auto;
+      margin: 0;
+    }
+
     span {
       display: flex;
       justify-content: center;
@@ -272,6 +312,13 @@ h1 {
       height: 26px;
       border-radius: 10px;
       opacity: 0.88;
+
+      @media (max-width: 767px) {
+        padding: 4px 10px;
+        height: 24px;
+        border-radius: 6px;
+      }
+
       &:hover {
         opacity: 1;
         background-color: var(--color-primary-bg);
@@ -286,12 +333,22 @@ h1 {
 
 .playlists {
   margin-top: 24px;
+  width: 100%;
+  overflow-x: hidden;
+
+  @media (max-width: 767px) {
+    margin-top: 16px;
+  }
 }
 
 .load-more {
   display: flex;
   justify-content: center;
   margin-top: 32px;
+
+  @media (max-width: 767px) {
+    margin-top: 24px;
+  }
 }
 
 .button.more {

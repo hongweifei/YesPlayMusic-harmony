@@ -123,6 +123,12 @@ export default {
   display: flex;
   height: 198px;
   box-sizing: border-box;
+
+  @media (max-width: 767px) {
+    padding: 0.75rem;
+    height: 160px;
+    border-radius: 0.75rem;
+  }
 }
 .cover {
   height: 100%;
@@ -131,6 +137,10 @@ export default {
   margin-right: 1.2rem;
   cursor: pointer;
   user-select: none;
+
+  @media (max-width: 767px) {
+    margin-right: 0.75rem;
+  }
 }
 .right-part {
   display: flex;
@@ -138,6 +148,7 @@ export default {
   justify-content: space-between;
   color: var(--color-text);
   width: 100%;
+
   .title {
     font-size: 1.6rem;
     font-weight: 600;
@@ -147,6 +158,11 @@ export default {
     -webkit-line-clamp: 2;
     overflow: hidden;
     word-break: break-all;
+
+    @media (max-width: 767px) {
+      font-size: 1.2rem;
+      margin-bottom: 0.4rem;
+    }
   }
   .artist {
     opacity: 0.68;
@@ -155,25 +171,50 @@ export default {
     -webkit-line-clamp: 2;
     overflow: hidden;
     word-break: break-all;
+
+    @media (max-width: 767px) {
+      font-size: 0.9rem;
+    }
   }
   .controls {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     margin-left: -0.4rem;
+
+    @media (max-width: 767px) {
+      margin-left: -0.2rem;
+    }
+
     .buttons {
       display: flex;
     }
     .button-icon {
       margin: 0 8px 0 0;
+
+      @media (max-width: 767px) {
+        margin: 0 4px 0 0;
+        min-width: 40px;
+        min-height: 40px;
+      }
     }
     .svg-icon {
       width: 24px;
       height: 24px;
+
+      @media (max-width: 767px) {
+        width: 20px;
+        height: 20px;
+      }
     }
     .svg-icon#thumbs-down {
       width: 22px;
       height: 22px;
+
+      @media (max-width: 767px) {
+        width: 18px;
+        height: 18px;
+      }
     }
     .card-name {
       font-size: 1rem;
@@ -182,10 +223,21 @@ export default {
       align-items: center;
       font-weight: 600;
       user-select: none;
+
+      @media (max-width: 767px) {
+        font-size: 0.85rem;
+      }
+
       .svg-icon {
         width: 18px;
         height: 18px;
         margin-right: 6px;
+
+        @media (max-width: 767px) {
+          width: 14px;
+          height: 14px;
+          margin-right: 4px;
+        }
       }
     }
   }

@@ -45,5 +45,9 @@ export default {
 h1 {
   color: var(--color-text);
   font-size: 56px;
+
+  @media (max-width: 767px) {
+    font-size: 28px;
+  }
 }
 </style>

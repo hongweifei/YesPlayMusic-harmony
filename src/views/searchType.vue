@@ -142,6 +142,13 @@ h1 {
   margin-top: 32px;
   margin-bottom: 28px;
   color: var(--color-text);
+
+  @media (max-width: 767px) {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    font-size: 20px;
+  }
+
   span {
     opacity: 0.58;
   }
@@ -150,6 +157,10 @@ h1 {
   display: flex;
   justify-content: center;
   margin-top: 32px;
+
+  @media (max-width: 767px) {
+    margin-top: 24px;
+  }
 }
 
 .button.more {

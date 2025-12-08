@@ -71,20 +71,40 @@ export default {
   justify-content: center;
   align-items: center;
   height: calc(100vh - 192px);
+
+  @media (max-width: 767px) {
+    height: calc(100vh - 120px);
+    padding: 20px;
+  }
 }
 
 .section-1 {
   margin-bottom: 16px;
   display: flex;
   align-items: center;
+
+  @media (max-width: 767px) {
+    margin-bottom: 24px;
+  }
+
   img {
     height: 64px;
     margin: 20px;
+
+    @media (max-width: 767px) {
+      height: 48px;
+      margin: 12px;
+    }
   }
   .svg-icon {
     height: 24px;
     width: 24px;
     color: rgba(82, 82, 82, 0.28);
+
+    @media (max-width: 767px) {
+      height: 20px;
+      width: 20px;
+    }
   }
 }
 
@@ -92,6 +112,10 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 }
 .card {
   cursor: pointer;
@@ -107,6 +131,13 @@ export default {
   transition: all 0.3s;
   padding-left: 22px;
   box-sizing: border-box;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    max-width: 100%;
+    height: 100px;
+    padding-left: 16px;
+  }
 
   .active {
     .title-info {
@@ -134,11 +165,19 @@ export default {
   .title {
     font-size: 24px;
     font-weight: 600;
+
+    @media (max-width: 767px) {
+      font-size: 20px;
+    }
   }
   .info {
     margin-top: 2px;
     font-size: 14px;
     color: rgba(51, 94, 234, 0.78);
+
+    @media (max-width: 767px) {
+      font-size: 12px;
+    }
   }
   .svg-icon {
     opacity: 0;
@@ -146,6 +185,12 @@ export default {
     width: 24px;
     margin-left: 16px;
     transition: all 0.3s;
+
+    @media (max-width: 767px) {
+      height: 20px;
+      width: 20px;
+      margin-left: 12px;
+    }
   }
 }
 </style>

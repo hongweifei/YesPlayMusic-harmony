@@ -423,23 +423,44 @@ h1 {
   color: var(--color-text);
   display: flex;
   align-items: center;
+
+  @media (max-width: 767px) {
+    font-size: 24px;
+  }
+
   .avatar {
     height: 44px;
     margin-right: 12px;
     vertical-align: -7px;
     border-radius: 50%;
     border: rgba(0, 0, 0, 0.2);
+
+    @media (max-width: 767px) {
+      height: 32px;
+      margin-right: 8px;
+    }
   }
 }
 
 .section-one {
   display: flex;
   margin-top: 24px;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    margin-top: 16px;
+  }
+
   .songs {
     flex: 7;
     margin-top: 8px;
     margin-left: 36px;
     overflow: hidden;
+
+    @media (max-width: 767px) {
+      margin-left: 0;
+      margin-top: 16px;
+    }
   }
 }
 
@@ -454,6 +475,11 @@ h1 {
   transition: all 0.4s;
   box-sizing: border-box;
 
+  @media (max-width: 767px) {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
   background: var(--color-primary-bg);
 
   .bottom {
@@ -465,10 +491,18 @@ h1 {
     .title {
       font-size: 24px;
       font-weight: 700;
+
+      @media (max-width: 767px) {
+        font-size: 20px;
+      }
     }
     .sub-title {
       font-size: 15px;
       margin-top: 2px;
+
+      @media (max-width: 767px) {
+        font-size: 13px;
+      }
     }
 
     button {
@@ -483,6 +517,11 @@ h1 {
       transition: 0.2s;
       box-shadow: 0 6px 12px -4px rgba(0, 0, 0, 0.2);
       cursor: default;
+
+      @media (max-width: 767px) {
+        height: 40px;
+        width: 40px;
+      }
 
       .svg-icon {
         color: var(--color-primary-bg);
@@ -516,12 +555,22 @@ h1 {
 .section-two {
   margin-top: 54px;
   min-height: calc(100vh - 182px);
+
+  @media (max-width: 767px) {
+    margin-top: 32px;
+  }
 }
 
 .tabs-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 24px;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
 }
 
 .tabs {
@@ -529,6 +578,12 @@ h1 {
   flex-wrap: wrap;
   font-size: 18px;
   color: var(--color-text);
+
+  @media (max-width: 767px) {
+    font-size: 15px;
+    gap: 8px;
+  }
+
   .tab {
     font-weight: 600;
     padding: 8px 14px;
@@ -538,6 +593,12 @@ h1 {
     user-select: none;
     transition: 0.2s;
     opacity: 0.68;
+
+    @media (max-width: 767px) {
+      padding: 6px 12px;
+      margin-right: 0;
+    }
+
     &:hover {
       opacity: 0.88;
       background-color: var(--color-secondary-bg);

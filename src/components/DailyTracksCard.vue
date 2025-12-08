@@ -85,6 +85,11 @@ export default {
   position: relative;
   overflow: hidden;
   z-index: 1;
+
+  @media (max-width: 767px) {
+    height: 160px;
+    border-radius: 0.75rem;
+  }
 }
 
 img {
@@ -104,6 +109,11 @@ img {
   display: flex;
   align-items: center;
   border-radius: 0.94rem;
+
+  @media (max-width: 767px) {
+    height: 160px;
+    width: 60%;
+  }
 }
 
 .title-box {
@@ -115,6 +125,13 @@ img {
   align-items: center;
   margin-left: 25px;
   user-select: none;
+
+  @media (max-width: 767px) {
+    height: 120px;
+    width: 120px;
+    margin-left: 16px;
+  }
+
   .title {
     height: 100%;
     width: 100%;
@@ -126,6 +143,11 @@ img {
     grid-template-columns: 1fr 1fr;
     justify-items: center;
     place-items: center;
+
+    @media (max-width: 767px) {
+      font-size: 48px;
+      line-height: 36px;
+    }
   }
 }
 
@@ -146,6 +168,13 @@ img {
   width: 44px;
   transition: 0.2s;
   cursor: default;
+
+  @media (max-width: 767px) {
+    right: 1rem;
+    bottom: 1rem;
+    height: 40px;
+    width: 40px;
+  }
 
   .svg-icon {
     margin-left: 4px;

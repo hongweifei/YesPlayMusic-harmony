@@ -56,7 +56,7 @@ import MvRow from '@/components/MvRow.vue';
 import { mapActions } from 'vuex';
 
 export default {
-  name: 'mv',
+  name: 'Mv',
   components: {
     MvRow,
     ButtonIcon,
@@ -169,6 +169,10 @@ export default {
 .mv-page {
   width: 100%;
   margin-top: 32px;
+
+  @media (max-width: 767px) {
+    margin-top: 16px;
+  }
 }
 .current-video {
   width: 100%;
@@ -178,48 +182,99 @@ export default {
   background: transparent;
   overflow: hidden;
   max-height: 100vh;
+
+  @media (max-width: 767px) {
+    border-radius: 12px;
+  }
 }
 
 .video-info {
   margin-top: 12px;
   color: var(--color-text);
+
+  @media (max-width: 767px) {
+    margin-top: 8px;
+  }
+
   .title {
     font-size: 24px;
     font-weight: 600;
+
+    @media (max-width: 767px) {
+      font-size: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px;
+    }
   }
   .artist {
     font-size: 14px;
     opacity: 0.88;
     margin-top: 2px;
     font-weight: 600;
+
+    @media (max-width: 767px) {
+      font-size: 13px;
+    }
   }
   .info {
     font-size: 12px;
     opacity: 0.68;
     margin-top: 12px;
+
+    @media (max-width: 767px) {
+      font-size: 11px;
+      margin-top: 8px;
+    }
   }
 }
 
 .more-video {
   margin-top: 48px;
+
+  @media (max-width: 767px) {
+    margin-top: 32px;
+  }
+
   .section-title {
     font-size: 18px;
     font-weight: 600;
     color: var(--color-text);
     opacity: 0.88;
     margin-bottom: 12px;
+
+    @media (max-width: 767px) {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
   }
 }
 
 .buttons {
   display: inline-block;
+
+  @media (max-width: 767px) {
+    margin-left: 8px;
+  }
+
   .button {
     display: inline-block;
+
+    @media (max-width: 767px) {
+      min-width: 40px;
+      min-height: 40px;
+    }
   }
   .svg-icon {
     height: 18px;
     width: 18px;
     color: var(--color-primary);
+
+    @media (max-width: 767px) {
+      height: 16px;
+      width: 16px;
+    }
   }
 }
 </style>

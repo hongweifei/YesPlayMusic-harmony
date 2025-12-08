@@ -74,15 +74,34 @@ button {
   margin-right: 12px;
   transition: 0.2s;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  @media (max-width: 767px) {
+    min-width: 44px;
+    min-height: 44px;
+    height: 44px;
+    font-size: 16px;
+    margin-right: 8px;
+  }
+
   .svg-icon {
     width: 16px;
     height: 16px;
+
+    @media (max-width: 767px) {
+      width: 18px;
+      height: 18px;
+    }
   }
   &:hover {
     transform: scale(1.06);
   }
   &:active {
     transform: scale(0.94);
+
+    @media (max-width: 767px) {
+      transform: scale(0.96);
+    }
   }
 }
 button.grey {

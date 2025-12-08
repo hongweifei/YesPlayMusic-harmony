@@ -110,25 +110,48 @@ export default {
 .login {
   display: flex;
   color: var(--color-text);
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    padding: 20px;
+  }
 }
 
 .title {
   font-size: 42px;
   font-weight: 700;
   margin-bottom: 48px;
+
+  @media (max-width: 767px) {
+    font-size: 28px;
+    margin-bottom: 32px;
+  }
 }
 
 .sestion {
   margin-top: 18px;
+
+  @media (max-width: 767px) {
+    margin-top: 16px;
+  }
+
   .name {
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 8px;
     opacity: 0.78;
+
+    @media (max-width: 767px) {
+      font-size: 13px;
+    }
   }
 }
 
 .search-box {
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+
   .container {
     display: flex;
     align-items: center;
@@ -136,6 +159,11 @@ export default {
     border-radius: 11px;
     width: 326px;
     background: var(--color-primary-bg);
+
+    @media (max-width: 767px) {
+      width: 100%;
+      height: 44px;
+    }
   }
 
   .svg-icon {
@@ -145,6 +173,13 @@ export default {
     margin: {
       left: 12px;
       right: 8px;
+    }
+
+    @media (max-width: 767px) {
+      height: 20px;
+      width: 20px;
+      margin-left: 10px;
+      margin-right: 6px;
     }
   }
 
@@ -157,6 +192,12 @@ export default {
     font-weight: 600;
     margin-top: -1px;
     color: var(--color-primary);
+
+    @media (max-width: 767px) {
+      font-size: 16px;
+      width: 100%;
+    }
+
     &::placeholder {
       color: var(--color-primary);
       opacity: 0.78;
@@ -169,6 +210,12 @@ export default {
   flex-wrap: wrap;
   margin-top: 24px;
   margin-bottom: 24px;
+
+  @media (max-width: 767px) {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    gap: 8px;
+  }
 }
 
 .user {
@@ -181,14 +228,32 @@ export default {
   width: 256px;
   transition: 0.2s;
   user-select: none;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 0;
+    padding: 10px 12px;
+  }
+
   .head {
     border-radius: 50%;
     height: 44px;
     width: 44px;
+
+    @media (max-width: 767px) {
+      height: 40px;
+      width: 40px;
+    }
   }
   .nickname {
     font-size: 18px;
     margin-left: 12px;
+
+    @media (max-width: 767px) {
+      font-size: 16px;
+      margin-left: 10px;
+    }
   }
   &:hover {
     background: var(--color-secondary-bg);

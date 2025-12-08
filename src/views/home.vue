@@ -1,5 +1,5 @@
 <template>
-  <div v-show="show" class="home">
+  <div v-show="show" class="home" style="width: 100%; overflow-x: hidden">
     <div
       v-if="settings.showPlaylistsByAppleMusic !== false"
       class="index-row first-row"
@@ -159,9 +159,19 @@ export default {
 <style lang="scss" scoped>
 .index-row {
   margin-top: 54px;
+  width: 100%;
+  overflow-x: hidden;
+
+  @media (max-width: 767px) {
+    margin-top: 24px;
+  }
 }
 .index-row.first-row {
   margin-top: 32px;
+
+  @media (max-width: 767px) {
+    margin-top: 12px;
+  }
 }
 .playlists {
   display: flex;
@@ -173,6 +183,16 @@ export default {
   .index-playlist {
     margin: 12px 12px 24px 12px;
   }
+
+  @media (max-width: 767px) {
+    margin: {
+      right: -8px;
+      left: -8px;
+    }
+    .index-playlist {
+      margin: 8px 8px 16px 8px;
+    }
+  }
 }
 
 .title {
@@ -183,10 +203,20 @@ export default {
   font-size: 28px;
   font-weight: 700;
   color: var(--color-text);
+
+  @media (max-width: 767px) {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
   a {
     font-size: 13px;
     font-weight: 600;
     opacity: 0.68;
+
+    @media (max-width: 767px) {
+      font-size: 12px;
+    }
   }
 }
 
@@ -194,6 +224,10 @@ footer {
   display: flex;
   justify-content: center;
   margin-top: 48px;
+
+  @media (max-width: 767px) {
+    margin-top: 32px;
+  }
 }
 
 .for-you-row {
@@ -201,5 +235,11 @@ footer {
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   margin-bottom: 78px;
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
 }
 </style>

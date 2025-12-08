@@ -548,21 +548,41 @@ export default {
 <style lang="scss" scoped>
 .playlist {
   margin-top: 32px;
+
+  @media (max-width: 767px) {
+    margin-top: 16px;
+  }
 }
 .playlist-info {
   display: flex;
   margin-bottom: 72px;
   position: relative;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    margin-bottom: 24px;
+  }
+
   .info {
     display: flex;
     flex-direction: column;
     justify-content: center;
     flex: 1;
     margin-left: 56px;
+
+    @media (max-width: 767px) {
+      margin-left: 0;
+      margin-top: 12px;
+    }
+
     .title {
       font-size: 36px;
       font-weight: 700;
       color: var(--color-text);
+
+      @media (max-width: 767px) {
+        font-size: 22px;
+      }
 
       .lock-icon {
         opacity: 0.28;
@@ -579,12 +599,21 @@ export default {
       opacity: 0.88;
       color: var(--color-text);
       margin-top: 24px;
+
+      @media (max-width: 767px) {
+        font-size: 14px;
+        margin-top: 10px;
+      }
     }
     .date-and-count {
       font-size: 14px;
       opacity: 0.68;
       color: var(--color-text);
       margin-top: 2px;
+
+      @media (max-width: 767px) {
+        font-size: 12px;
+      }
     }
     .description {
       font-size: 14px;

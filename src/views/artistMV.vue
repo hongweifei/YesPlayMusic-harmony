@@ -85,16 +85,34 @@ export default {
 h1 {
   font-size: 42px;
   color: var(--color-text);
+
+  @media (max-width: 767px) {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
   .avatar {
     height: 44px;
     margin-right: 12px;
     vertical-align: -7px;
     border-radius: 50%;
     border: rgba(0, 0, 0, 0.2);
+
+    @media (max-width: 767px) {
+      height: 32px;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
   }
 }
 .load-more {
   display: flex;
   justify-content: center;
+
+  @media (max-width: 767px) {
+    margin-top: 24px;
+  }
 }
 </style>

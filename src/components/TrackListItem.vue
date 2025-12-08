@@ -254,6 +254,11 @@ button {
   border-radius: 12px;
   user-select: none;
 
+  @media (max-width: 767px) {
+    padding: 12px 8px;
+    min-height: 60px; // 增加触摸区域
+  }
+
   .no {
     display: flex;
     justify-content: center;
@@ -263,8 +268,18 @@ button {
     width: 12px;
     color: var(--color-text);
     cursor: default;
+
+    @media (max-width: 767px) {
+      margin: 0 12px 0 4px;
+      min-width: 24px;
+    }
+
     span {
       opacity: 0.58;
+
+      @media (max-width: 767px) {
+        font-size: 14px;
+      }
     }
   }
 
@@ -289,6 +304,12 @@ button {
     margin-right: 20px;
     border: 1px solid rgba(0, 0, 0, 0.04);
     cursor: pointer;
+
+    @media (max-width: 767px) {
+      height: 48px;
+      width: 48px;
+      margin-right: 12px;
+    }
   }
 
   img.hover {
@@ -313,11 +334,21 @@ button {
       -webkit-line-clamp: 1;
       overflow: hidden;
       word-break: break-all;
+
+      @media (max-width: 767px) {
+        font-size: 15px;
+        padding-right: 8px;
+      }
+
       .featured {
         margin-right: 2px;
         font-weight: 500;
         font-size: 14px;
         opacity: 0.72;
+
+        @media (max-width: 767px) {
+          font-size: 12px;
+        }
       }
       .sub-title {
         color: #7a7a7a;
@@ -334,6 +365,12 @@ button {
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 1;
       overflow: hidden;
+
+      @media (max-width: 767px) {
+        font-size: 12px;
+        margin-top: 4px;
+      }
+
       a {
         span {
           margin-right: 3px;
@@ -356,6 +393,11 @@ button {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
+
+    @media (max-width: 767px) {
+      font-size: 13px;
+      display: none; // 移动端隐藏专辑名以节省空间
+    }
   }
   .time,
   .count {
@@ -368,6 +410,12 @@ button {
     font-variant-numeric: tabular-nums;
     opacity: 0.88;
     color: var(--color-text);
+
+    @media (max-width: 767px) {
+      font-size: 13px;
+      width: 40px;
+      margin-right: 4px;
+    }
   }
   .count {
     font-weight: bold;
@@ -422,6 +470,16 @@ button {
   width: 80px;
   display: flex;
   justify-content: flex-end;
+
+  @media (max-width: 767px) {
+    width: 44px;
+    min-width: 44px;
+
+    button {
+      min-width: 44px;
+      min-height: 44px;
+    }
+  }
 }
 
 .track.playing {

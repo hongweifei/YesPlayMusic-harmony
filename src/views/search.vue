@@ -236,10 +236,20 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 767px) {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
   a {
     font-size: 13px;
     font-weight: 600;
     opacity: 0.68;
+
+    @media (max-width: 767px) {
+      font-size: 12px;
+    }
   }
 }
 
@@ -255,12 +265,26 @@ export default {
   .albums {
     flex: 1;
   }
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    margin-top: 24px;
+
+    .artists {
+      margin-right: 0;
+      margin-bottom: 24px;
+    }
+  }
 }
 
 .tracks,
 .music-videos,
 .playlists {
   margin-top: 46px;
+
+  @media (max-width: 767px) {
+    margin-top: 32px;
+  }
 }
 
 .no-results {
@@ -275,6 +299,13 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 767px) {
+    top: 0;
+    bottom: 120px; // 为播放器(60px)和底部导航栏(60px)留出空间
+    font-size: 18px;
+  }
+
   div {
     display: flex;
     align-items: center;
@@ -283,6 +314,12 @@ export default {
     height: 24px;
     width: 24px;
     margin-right: 16px;
+
+    @media (max-width: 767px) {
+      height: 20px;
+      width: 20px;
+      margin-right: 12px;
+    }
   }
 }
 </style>

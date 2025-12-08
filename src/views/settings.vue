@@ -1611,15 +1611,30 @@ export default {
   display: flex;
   justify-content: center;
   margin-top: 32px;
+
+  @media (max-width: 767px) {
+    margin-top: 16px;
+    padding: 0 16px;
+  }
 }
 .container {
   margin-top: 24px;
   width: 720px;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    margin-top: 16px;
+  }
 }
 h2 {
   margin-top: 48px;
   font-size: 36px;
   color: var(--color-text);
+
+  @media (max-width: 767px) {
+    margin-top: 32px;
+    font-size: 28px;
+  }
 }
 
 h3 {
@@ -1628,6 +1643,12 @@ h3 {
   font-size: 26px;
   color: var(--color-text);
   border-bottom: 1px solid rgba(128, 128, 128, 0.18);
+
+  @media (max-width: 767px) {
+    margin-top: 32px;
+    font-size: 22px;
+    padding-bottom: 8px;
+  }
 }
 
 .user {
@@ -1639,10 +1660,24 @@ h3 {
   padding: 16px 20px;
   border-radius: 16px;
   margin-bottom: 48px;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+    margin-bottom: 32px;
+    gap: 16px;
+  }
+
   img.avatar {
     border-radius: 50%;
     height: 64px;
     width: 64px;
+
+    @media (max-width: 767px) {
+      height: 56px;
+      width: 56px;
+    }
   }
   img.cvip {
     height: 13px;
@@ -1651,16 +1686,35 @@ h3 {
   .left {
     display: flex;
     align-items: center;
+
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+
     .info {
       margin-left: 24px;
+
+      @media (max-width: 767px) {
+        margin-left: 16px;
+        flex: 1;
+      }
     }
     .nickname {
       font-size: 20px;
       font-weight: 600;
       margin-bottom: 2px;
+
+      @media (max-width: 767px) {
+        font-size: 18px;
+      }
     }
     .extra-info {
       font-size: 13px;
+
+      @media (max-width: 767px) {
+        font-size: 12px;
+      }
+
       .text {
         opacity: 0.68;
       }
@@ -1671,6 +1725,10 @@ h3 {
     }
   }
   .right {
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+
     .svg-icon {
       height: 18px;
       width: 18px;
@@ -1691,6 +1749,15 @@ h3 {
         right: 12px;
         left: 12px;
       }
+
+      @media (max-width: 767px) {
+        width: 100%;
+        justify-content: center;
+        margin: 0;
+        min-height: 44px;
+        font-size: 16px;
+      }
+
       &:hover {
         opacity: 1;
         background: #eaeffd;
@@ -1712,16 +1779,31 @@ h3 {
   justify-content: space-between;
   color: var(--color-text);
 
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 20px 0;
+    gap: 12px;
+  }
+
   .title {
     font-size: 16px;
     font-weight: 500;
     opacity: 0.78;
+
+    @media (max-width: 767px) {
+      font-size: 15px;
+    }
   }
 
   .description {
     font-size: 14px;
     margin-top: 0.5em;
     opacity: 0.7;
+
+    @media (max-width: 767px) {
+      font-size: 13px;
+    }
   }
 }
 
@@ -1735,6 +1817,16 @@ select {
   color: var(--color-text);
   background: var(--color-secondary-bg);
   appearance: none;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 10px 12px;
+    font-size: 16px;
+    min-height: 44px;
+  }
+
   &:focus {
     outline: none;
     color: var(--color-primary);
@@ -1749,6 +1841,13 @@ button {
   font-weight: 600;
   border-radius: 8px;
   transition: 0.2s;
+
+  @media (max-width: 767px) {
+    padding: 10px 12px;
+    min-height: 44px;
+    font-size: 15px;
+  }
+
   &:hover {
     transform: scale(1.06);
   }
@@ -1769,6 +1868,14 @@ input.text-input {
   color: var(--color-text);
   font-weight: 600;
   font-size: 16px;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 8px;
+    padding: 10px 12px;
+    min-height: 44px;
+  }
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -1795,12 +1902,27 @@ input[type='number'] {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   input.text-input {
     flex: 1;
     min-width: 200px;
+
+    @media (max-width: 767px) {
+      min-width: 100%;
+    }
   }
   button {
     white-space: nowrap;
+
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+
     &.testing {
       opacity: 0.6;
       cursor: not-allowed;
@@ -1813,6 +1935,11 @@ input[type='number'] {
     border-radius: 8px;
     font-size: 14px;
     font-weight: 500;
+
+    @media (max-width: 767px) {
+      font-size: 13px;
+    }
+
     &.success {
       background: rgba(76, 175, 80, 0.1);
       color: #4caf50;
@@ -1829,13 +1956,27 @@ input[type='number'] {
   /* border: 1px solid black; */
   user-select: none;
   color: var(--color-text);
+
+  @media (max-width: 767px) {
+    font-size: 13px;
+    overflow-x: auto;
+  }
+
   .row {
     display: flex;
+
+    @media (max-width: 767px) {
+      min-width: 600px;
+    }
   }
   .row.row-head {
     opacity: 0.58;
     font-size: 13px;
     font-weight: 500;
+
+    @media (max-width: 767px) {
+      font-size: 12px;
+    }
   }
   .col {
     min-width: 192px;
@@ -1843,9 +1984,19 @@ input[type='number'] {
     display: flex;
     align-items: center;
     /* border: 1px solid red; */
+
+    @media (max-width: 767px) {
+      min-width: 150px;
+      padding: 6px;
+    }
+
     &:first-of-type {
       padding-left: 0;
       min-width: 128px;
+
+      @media (max-width: 767px) {
+        min-width: 100px;
+      }
     }
   }
   .keyboard-input {
@@ -1856,6 +2007,13 @@ input[type='number'] {
     min-width: 146px;
     min-height: 34px;
     box-sizing: border-box;
+
+    @media (max-width: 767px) {
+      min-width: 120px;
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+
     &.active {
       color: var(--color-primary);
       background-color: var(--color-primary-bg);
@@ -1863,6 +2021,11 @@ input[type='number'] {
   }
   .restore-default-shortcut {
     margin-top: 12px;
+
+    @media (max-width: 767px) {
+      margin-top: 16px;
+      width: 100%;
+    }
   }
   &.global-disabled {
     .row .col:last-child {
@@ -1882,13 +2045,26 @@ input[type='number'] {
   margin-top: 6rem;
   color: var(--color-text);
   font-weight: 600;
+
+  @media (max-width: 767px) {
+    margin-top: 4rem;
+  }
+
   .author {
     font-size: 0.9rem;
+
+    @media (max-width: 767px) {
+      font-size: 0.85rem;
+    }
   }
   .version {
     font-size: 0.88rem;
     opacity: 0.58;
     margin-top: -10px;
+
+    @media (max-width: 767px) {
+      font-size: 0.8rem;
+    }
   }
 }
 

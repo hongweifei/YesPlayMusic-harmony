@@ -91,6 +91,16 @@ export default {
   flex-direction: column;
   max-height: calc(100vh - 128px - 64px);
 
+  @media (max-width: 767px) {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+  }
+
   ::-webkit-scrollbar {
     width: 4px;
   }
@@ -114,6 +124,13 @@ export default {
   overflow: auto;
   overflow-x: hidden;
   padding: 0 24px;
+  -webkit-overflow-scrolling: touch;
+
+  @media (max-width: 767px) {
+    padding: 0 16px;
+    flex: 1;
+    overflow-y: auto;
+  }
 }
 
 .header {
@@ -121,9 +138,19 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin: 0 24px 24px 24px;
+
+  @media (max-width: 767px) {
+    margin: 0 16px 16px 16px;
+    padding-top: env(safe-area-inset-top, 0);
+  }
+
   .title {
     font-weight: 600;
     font-size: 20px;
+
+    @media (max-width: 767px) {
+      font-size: 18px;
+    }
   }
   button {
     color: var(--color-text);
@@ -135,6 +162,14 @@ export default {
     align-items: center;
     opacity: 0.68;
     transition: 0.2s;
+    min-width: 44px;
+    min-height: 44px;
+
+    @media (max-width: 767px) {
+      height: 44px;
+      width: 44px;
+    }
+
     &:hover {
       opacity: 1;
       background: var(--color-secondary-bg-for-transparent);
@@ -153,6 +188,12 @@ export default {
   display: flex;
   justify-content: flex-end;
   margin-bottom: -8px;
+
+  @media (max-width: 767px) {
+    margin: 16px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0));
+  }
+
   button {
     color: var(--color-text);
     background: var(--color-secondary-bg-for-transparent);
@@ -161,6 +202,13 @@ export default {
     font-size: 14px;
     margin-left: 12px;
     transition: 0.2s;
+    min-height: 44px;
+
+    @media (max-width: 767px) {
+      padding: 10px 20px;
+      font-size: 15px;
+    }
+
     &:active {
       transform: scale(0.94);
     }

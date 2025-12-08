@@ -328,6 +328,12 @@ export default {
   // background-color: rgba(255, 255, 255, 0.86);
   background-color: var(--color-navbar-bg);
   z-index: 100;
+
+  // 移动端适配
+  @media (max-width: 767px) {
+    height: 64px; // 保持与桌面端相同的高度
+    bottom: 60px; // 为底部导航栏留出空间
+  }
 }
 
 @supports (-moz-appearance: none) {
@@ -340,9 +346,32 @@ export default {
   margin-top: -6px;
   margin-bottom: -6px;
   width: 100%;
+
+  @media (max-width: 767px) {
+    // 增加进度条在移动端的高度和触摸区域
+    margin-top: -8px;
+    margin-bottom: -8px;
+    padding: 0 4px;
+
+    // 增大滑块控件的触摸区域
+    ::v-deep .vue-slider {
+      .vue-slider-dot {
+        // 增大触摸区域但不改变视觉大小
+        &::after {
+          content: '';
+          position: absolute;
+          top: -10px;
+          left: -10px;
+          right: -10px;
+          bottom: -10px;
+        }
+      }
+    }
+  }
 }
 
 .controls {
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   height: 100%;
@@ -355,6 +384,18 @@ export default {
 @media (max-width: 1336px) {
   .controls {
     padding: 0 5vw;
+  }
+}
+
+@media (max-width: 767px) {
+  .controls {
+    // 移动端切换为 flex 布局，确保3列占满宽度
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding: 0 16px;
+    gap: 0;
   }
 }
 
@@ -383,6 +424,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     .name {
+      width: fit-content;
       font-weight: 600;
       font-size: 16px;
       opacity: 0.88;
@@ -401,6 +443,7 @@ export default {
       }
     }
     .artist {
+      width: fit-content;
       font-size: 12px;
       opacity: 0.58;
       color: var(--color-text);
@@ -415,6 +458,44 @@ export default {
           text-decoration: underline;
         }
       }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .playing {
+    // 移动端 flex 布局：左侧区域占据更多空间
+    flex: 1 1 auto;
+    min-width: 0; // 允许 flex 子元素收缩
+  }
+
+  .playing .blank {
+    display: none;
+  }
+
+  .playing .container {
+    width: 100%;
+    max-width: 100%;
+
+    img {
+      height: 36px; // 缩小封面尺寸
+      flex-shrink: 0; // 防止封面被压缩
+    }
+    .track-info {
+      height: 36px;
+      margin-left: 8px;
+      flex: 1;
+      min-width: 0; // 允许文本区域收缩，配合文本溢出处理
+      .name {
+        font-size: 13px;
+      }
+      .artist {
+        font-size: 11px;
+      }
+    }
+    // 隐藏喜欢按钮
+    .like-button {
+      display: none;
     }
   }
 }
@@ -438,6 +519,49 @@ export default {
     .svg-icon {
       width: 24px;
       height: 24px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .middle-control-buttons {
+    // 移动端 flex 布局：中间区域固定宽度
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .middle-control-buttons .blank {
+    display: none;
+  }
+
+  .middle-control-buttons .container {
+    padding: 0 8px;
+    justify-content: center; // 居中对齐播放按钮
+
+    // 隐藏除了播放按钮之外的所有按钮
+    > .button-icon:not(.play) {
+      display: none !important;
+    }
+
+    // 确保播放按钮显示
+    > .play {
+      height: 44px !important;
+      width: 44px !important;
+      margin: 0 !important;
+      display: flex !important;
+
+      button {
+        width: 44px !important;
+        height: 44px !important;
+        padding: 10px !important;
+      }
+
+      .svg-icon {
+        width: 1.25rem !important;
+        height: 1.25rem !important;
+      }
     }
   }
 }
@@ -474,6 +598,50 @@ export default {
   margin-left: 16px;
 }
 
+@media (max-width: 767px) {
+  .right-control-buttons {
+    // 移动端 flex 布局：右侧区域固定宽度
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .right-control-buttons .blank {
+    display: none;
+  }
+
+  .right-control-buttons .container {
+    justify-content: flex-end; // 右对齐歌词按钮
+    padding: 0;
+  }
+
+  // 隐藏除了歌词按钮之外的所有控件
+  .right-control-buttons .container .button-icon:not(.lyrics-button) {
+    display: none !important;
+  }
+
+  // 特别隐藏音量控制
+  .right-control-buttons .container .volume-control {
+    display: none !important;
+  }
+
+  // 歌词按钮样式调整
+  .right-control-buttons .container .lyrics-button {
+    margin-left: 0 !important;
+    min-width: 40px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .svg-icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
 .button-icon.disabled {
   cursor: default;
   opacity: 0.38;
@@ -482,6 +650,44 @@ export default {
   }
   &:active {
     transform: unset;
+  }
+}
+
+// 小屏幕手机进一步优化
+@media (max-width: 375px) {
+  .player {
+    height: 64px; // 保持一致的高度
+  }
+
+  .controls {
+    padding: 0 12px;
+  }
+
+  .playing .container {
+    img {
+      height: 36px;
+    }
+    .track-info {
+      height: 36px;
+      margin-left: 6px;
+      .name {
+        font-size: 13px;
+      }
+      .artist {
+        font-size: 10px;
+      }
+    }
+  }
+
+  .middle-control-buttons .container {
+    .play {
+      height: 50px;
+      width: 50px;
+      .svg-icon {
+        width: 24px;
+        height: 24px;
+      }
+    }
   }
 }
 </style>
