@@ -91,15 +91,21 @@ export default {
       return isAccountLoggedIn();
     },
     showPlayer() {
-      return (
-        [
-          'mv',
-          'loginUsername',
-          'login',
-          'loginAccount',
-          'lastfmCallback',
-        ].includes(this.$route.name) === false
-      );
+      const excludedRoutes = [
+        'mv',
+        'loginUsername',
+        'login',
+        'loginAccount',
+        'lastfmCallback',
+      ];
+
+      // 移动端在设置页面也隐藏播放器
+      const isMobile = window.innerWidth <= 767;
+      if (isMobile && this.$route.name === 'settings') {
+        return false;
+      }
+
+      return excludedRoutes.includes(this.$route.name) === false;
     },
     enablePlayer() {
       return this.player.enabled && this.$route.name !== 'lastfmCallback';
