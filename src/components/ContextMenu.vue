@@ -31,14 +31,13 @@ export default {
   },
   methods: {
     setMenu(top, left) {
+      // 播放器高度：移动端和桌面端都是64px
       let heightOffset = this.player.enabled ? 64 : 0;
-      // 移动端需要考虑底部导航栏高度（60px）和播放器高度
+      // 移动端需要考虑底部导航栏高度（60px）
       const isMobile = window.innerWidth <= 767;
       if (isMobile) {
         heightOffset += 60; // 底部导航栏高度
-        if (this.player.enabled) {
-          heightOffset += 60; // 移动端播放器高度
-        }
+        // 注意：播放器高度已在上面统一处理，移动端播放器也是64px，不需要额外添加
       }
       let largestHeight =
         window.innerHeight - this.$refs.menu.offsetHeight - heightOffset;
