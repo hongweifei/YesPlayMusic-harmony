@@ -367,7 +367,6 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 8px 4px;
       color: var(--color-secondary);
       text-decoration: none;
       transition: color 0.2s;
