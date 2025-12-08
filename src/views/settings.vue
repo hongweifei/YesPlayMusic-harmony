@@ -1924,7 +1924,6 @@ input[type='number'] {
     }
   }
   .api-test-result {
-    width: 100%;
     margin-top: 8px;
     padding: 8px 12px;
     border-radius: 8px;
