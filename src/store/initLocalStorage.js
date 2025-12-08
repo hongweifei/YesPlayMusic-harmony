@@ -39,6 +39,7 @@ let localStorage = {
     },
     enableRealIP: false,
     realIP: null,
+    customNeteaseApiUrl: null,
     shortcuts: shortcuts,
   },
   data: {

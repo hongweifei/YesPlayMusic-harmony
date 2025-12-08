@@ -2,6 +2,8 @@ export default {
   common: {
     play: '播放',
     songs: '首歌',
+    apiConnectionFailed: 'API 连接失败，请前往设置页面配置自定义 API 地址',
+    goToSettings: '前往设置',
   },
   nav: {
     home: '首页',
@@ -194,6 +196,17 @@ export default {
       dynamic: '动态（GPU 占用较高）',
     },
     showLyricsTime: '显示当前时间',
+    customNeteaseApi: {
+      text: '自定义网易云 API 地址',
+      description:
+        '设置自定义的网易云音乐 API 服务器地址（留空则使用默认地址）',
+      placeholder: '例如: https://api.example.com 或 /api',
+      test: '测试连接',
+      testing: '测试中...',
+      success: '连接成功',
+      failed: '连接失败',
+      empty: '请输入 API 地址',
+    },
     closeAppOption: {
       text: '关闭主面板时...',
       ask: '询问',

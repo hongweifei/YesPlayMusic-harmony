@@ -2,6 +2,9 @@ export default {
   common: {
     play: 'PLAY',
     songs: 'Songs',
+    apiConnectionFailed:
+      'API connection failed. Please go to Settings to configure a custom API URL',
+    goToSettings: 'Go to Settings',
   },
   nav: {
     home: 'Home',
@@ -192,6 +195,17 @@ export default {
       off: 'Off',
       on: 'On',
       dynamic: 'Dynamic (High GPU usage)',
+    },
+    customNeteaseApi: {
+      text: 'Custom NetEase API URL',
+      description:
+        'Set a custom NetEase Music API server address (leave empty to use default)',
+      placeholder: 'e.g., https://api.example.com or /api',
+      test: 'Test Connection',
+      testing: 'Testing...',
+      success: 'Connection successful',
+      failed: 'Connection failed',
+      empty: 'Please enter API URL',
     },
     closeAppOption: {
       text: 'Close App...',

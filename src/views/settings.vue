@@ -681,6 +681,44 @@
         </div>
       </div>
 
+      <div v-if="!isElectron">
+        <h3>{{ $t('settings.customNeteaseApi.text') }}</h3>
+        <div class="item">
+          <div class="left">
+            <div class="title">{{ $t('settings.customNeteaseApi.text') }}</div>
+            <div class="description">
+              {{ $t('settings.customNeteaseApi.description') }}
+            </div>
+          </div>
+        </div>
+        <div id="custom-api-url">
+          <input
+            v-model="customNeteaseApiUrl"
+            class="text-input"
+            :placeholder="$t('settings.customNeteaseApi.placeholder')"
+            @keyup.enter="testApiConnection"
+          />
+          <button
+            :disabled="isTestingApi"
+            :class="{ testing: isTestingApi }"
+            @click="testApiConnection"
+          >
+            {{
+              isTestingApi
+                ? $t('settings.customNeteaseApi.testing')
+                : $t('settings.customNeteaseApi.test')
+            }}
+          </button>
+          <div
+            v-if="apiTestResult"
+            class="api-test-result"
+            :class="apiTestResult.type"
+          >
+            {{ apiTestResult.message }}
+          </div>
+        </div>
+      </div>
+
       <div v-if="isElectron">
         <h3>快捷键</h3>
         <div class="item">
@@ -792,6 +830,8 @@ import { isLooseLoggedIn, doLogout } from '@/utils/auth';
 import { auth as lastfmAuth } from '@/api/lastfm';
 import { changeAppearance, bytesToSize } from '@/utils/common';
 import { countDBSize, clearDB } from '@/utils/db';
+import { resetApiConnectionFailedFlag } from '@/utils/request';
+import axios from 'axios';
 import pkg from '../../package.json';
 
 const electron =
@@ -821,6 +861,8 @@ export default {
         recording: false,
       },
       recordedShortcut: [],
+      isTestingApi: false,
+      apiTestResult: null,
     };
   },
   computed: {
@@ -1308,6 +1350,19 @@ export default {
     isLastfmConnected() {
       return this.lastfm.key !== undefined;
     },
+    customNeteaseApiUrl: {
+      get() {
+        return this.settings.customNeteaseApiUrl || '';
+      },
+      set(value) {
+        this.$store.commit('updateSettings', {
+          key: 'customNeteaseApiUrl',
+          value: value.trim() || null,
+        });
+        // 清除之前的测试结果
+        this.apiTestResult = null;
+      },
+    },
   },
   created() {
     this.countDBSize('tracks');
@@ -1465,6 +1520,87 @@ export default {
     restoreDefaultShortcuts() {
       this.$store.commit('restoreDefaultShortcuts');
       ipcRenderer.send('restoreDefaultShortcuts');
+    },
+    async testApiConnection() {
+      const apiUrl = this.customNeteaseApiUrl.trim();
+
+      if (!apiUrl) {
+        this.apiTestResult = {
+          type: 'error',
+          message: this.$t('settings.customNeteaseApi.empty'),
+        };
+        return;
+      }
+
+      this.isTestingApi = true;
+      this.apiTestResult = null;
+
+      try {
+        // 使用 axios 直接测试 API（不通过 request.js，避免拦截器影响）
+        let testUrl = apiUrl.trim();
+        // 确保 URL 格式正确
+        if (
+          !testUrl.startsWith('http://') &&
+          !testUrl.startsWith('https://') &&
+          !testUrl.startsWith('/')
+        ) {
+          testUrl = `https://${testUrl}`;
+        }
+        // 移除末尾的斜杠
+        testUrl = testUrl.replace(/\/+$/, '');
+        const testEndpoint = `${testUrl}/search?keywords=test&limit=1`;
+
+        const response = await axios.get(testEndpoint, {
+          timeout: 10000,
+          validateStatus: status => status < 500, // 接受 4xx 状态码（API 可能返回 400 但说明 API 可用）
+        });
+
+        // 检查响应
+        if (response.status === 200 && response.data) {
+          // 检查是否是有效的 API 响应格式
+          if (typeof response.data === 'object' && 'code' in response.data) {
+            this.apiTestResult = {
+              type: 'success',
+              message: this.$t('settings.customNeteaseApi.success'),
+            };
+            // 保存设置（使用原始输入，不添加协议前缀）
+            this.$store.commit('updateSettings', {
+              key: 'customNeteaseApiUrl',
+              value: apiUrl,
+            });
+            // 重置 API 连接失败标志
+            resetApiConnectionFailedFlag();
+            this.showToast(this.$t('settings.customNeteaseApi.success'));
+          } else {
+            throw new Error('Invalid API response format');
+          }
+        } else {
+          throw new Error(`HTTP ${response.status}`);
+        }
+      } catch (error) {
+        let errorMessage = this.$t('settings.customNeteaseApi.failed');
+        if (error.response) {
+          errorMessage += ` (HTTP ${error.response.status})`;
+        } else if (error.message) {
+          if (error.message.includes('timeout')) {
+            errorMessage += ' (连接超时)';
+          } else if (
+            error.message.includes('Network Error') ||
+            error.message.includes('ERR_')
+          ) {
+            errorMessage += ' (网络错误)';
+          } else {
+            errorMessage += ` (${error.message})`;
+          }
+        }
+
+        this.apiTestResult = {
+          type: 'error',
+          message: errorMessage,
+        };
+      } finally {
+        this.isTestingApi = false;
+      }
     },
   },
 };
@@ -1652,6 +1788,39 @@ input[type='number'] {
   opacity: 0.47;
   button:hover {
     transform: unset;
+  }
+}
+#custom-api-url {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  input.text-input {
+    flex: 1;
+    min-width: 200px;
+  }
+  button {
+    white-space: nowrap;
+    &.testing {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+  .api-test-result {
+    width: 100%;
+    margin-top: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    &.success {
+      background: rgba(76, 175, 80, 0.1);
+      color: #4caf50;
+    }
+    &.error {
+      background: rgba(244, 67, 54, 0.1);
+      color: #f44336;
+    }
   }
 }
 

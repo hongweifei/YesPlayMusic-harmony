@@ -16,6 +16,16 @@
       <Player v-if="enablePlayer" v-show="showPlayer" ref="player" />
     </transition>
     <Toast />
+    <div
+      v-if="showApiConnectionFailed"
+      class="api-connection-failed-notice"
+      @click="goToSettings"
+    >
+      <div class="notice-content">
+        <div class="notice-text">{{ $t('common.apiConnectionFailed') }}</div>
+        <button class="notice-button">{{ $t('common.goToSettings') }}</button>
+      </div>
+    </div>
     <ModalAddTrackToPlaylist v-if="isAccountLoggedIn" />
     <ModalNewPlaylist v-if="isAccountLoggedIn" />
     <transition v-if="enablePlayer" name="slide-up">
@@ -51,6 +61,7 @@ export default {
     return {
       isElectron: process.env.IS_ELECTRON, // true || undefined
       userSelectNone: false,
+      showApiConnectionFailed: false,
     };
   },
   computed: {
@@ -76,10 +87,31 @@ export default {
       return this.$route.name !== 'lastfmCallback';
     },
   },
+  watch: {
+    $route(to) {
+      // 如果跳转到设置页面，隐藏提示
+      if (to.name === 'settings') {
+        this.showApiConnectionFailed = false;
+      }
+    },
+  },
   created() {
     if (this.isElectron) ipcRenderer(this);
     window.addEventListener('keydown', this.handleKeydown);
+    // 监听 API 连接失败事件
+    window.addEventListener(
+      'api-connection-failed',
+      this.handleApiConnectionFailed
+    );
     this.fetchData();
+  },
+  beforeDestroy() {
+    // 清理事件监听器
+    window.removeEventListener('keydown', this.handleKeydown);
+    window.removeEventListener(
+      'api-connection-failed',
+      this.handleApiConnectionFailed
+    );
   },
   methods: {
     handleKeydown(e) {
@@ -104,6 +136,26 @@ export default {
     },
     handleScroll() {
       this.$refs.scrollbar.handleScroll();
+    },
+    handleApiConnectionFailed() {
+      // 仅在非 Electron 模式下显示提示
+      if (process.env.IS_ELECTRON) {
+        return;
+      }
+
+      // 如果已经在设置页面，不显示提示
+      if (this.$route.name === 'settings') {
+        return;
+      }
+
+      // 显示提示框
+      this.showApiConnectionFailed = true;
+    },
+    goToSettings() {
+      this.showApiConnectionFailed = false;
+      if (this.$route.name !== 'settings') {
+        this.$router.push({ name: 'settings' });
+      }
     },
   },
 };
@@ -144,5 +196,75 @@ main::-webkit-scrollbar {
 .slide-up-enter,
 .slide-up-leave-to {
   transform: translateY(100%);
+}
+
+.api-connection-failed-notice {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1020;
+  cursor: pointer;
+  animation: slideDown 0.3s ease-out;
+}
+
+.notice-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255, 87, 34, 0.95);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 320px;
+  max-width: 600px;
+}
+
+.notice-text {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.notice-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+[data-theme='dark'] {
+  .notice-content {
+    background: rgba(244, 67, 54, 0.95);
+  }
 }
 </style>
