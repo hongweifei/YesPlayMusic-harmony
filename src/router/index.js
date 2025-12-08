@@ -145,6 +145,32 @@ VueRouter.prototype.push = function push(location) {
 };
 
 router.beforeEach((to, from, next) => {
+  // 移动端首次访问时自动跳转到首页（考虑底部导航）
+  const isMobile = window.innerWidth <= 767;
+  if (isMobile) {
+    // 检测是否是首次访问（没有来源路由或来源路由是 undefined）
+    const isFirstVisit = from.name === null || from.name === undefined;
+
+    // 底部导航栏中的路由（允许直接访问）
+    const bottomNavRoutes = ['home', 'explore', 'library', 'settings'];
+
+    // 其他允许的路由（登录相关、回调等）
+    const otherAllowedRoutes = [
+      'login',
+      'loginUsername',
+      'loginAccount',
+      'lastfmCallback',
+    ];
+
+    const allowedRoutes = [...bottomNavRoutes, ...otherAllowedRoutes];
+
+    // 如果是首次访问，且当前路由不在允许列表中，跳转到首页
+    if (isFirstVisit && !allowedRoutes.includes(to.name)) {
+      next({ name: 'home', replace: true });
+      return;
+    }
+  }
+
   // 需要登录的逻辑
   if (to.meta.requireAccountLogin) {
     if (isAccountLoggedIn()) {

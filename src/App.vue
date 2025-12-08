@@ -143,6 +143,10 @@ export default {
     this.fetchData();
     this.syncSearchKeywords();
   },
+  mounted() {
+    // 移动端首次打开时，如果当前路由不是底部导航中的页面，跳转到首页
+    this.handleMobileFirstVisit();
+  },
   beforeDestroy() {
     // 清理事件监听器
     window.removeEventListener('keydown', this.handleKeydown);
@@ -223,6 +227,34 @@ export default {
         this.$router.go(-1);
       } else {
         this.$router.push({ name: 'home' });
+      }
+    },
+    handleMobileFirstVisit() {
+      // 仅在移动端执行
+      const isMobile = window.innerWidth <= 767;
+      if (!isMobile) return;
+
+      // 底部导航栏中的路由（允许直接访问）
+      const bottomNavRoutes = ['home', 'explore', 'library', 'settings'];
+
+      // 其他允许的路由（登录相关、回调等）
+      const otherAllowedRoutes = [
+        'login',
+        'loginUsername',
+        'loginAccount',
+        'lastfmCallback',
+      ];
+
+      const allowedRoutes = [...bottomNavRoutes, ...otherAllowedRoutes];
+
+      // 如果当前路由不在允许列表中，跳转到首页
+      // 但只在首次加载时执行（避免影响正常导航）
+      if (!allowedRoutes.includes(this.$route.name)) {
+        // 检查是否是首次访问（通过检查是否有历史记录）
+        // 如果历史记录只有1条，说明是首次访问
+        if (window.history.length <= 1) {
+          this.$router.replace({ name: 'home' });
+        }
       }
     },
   },

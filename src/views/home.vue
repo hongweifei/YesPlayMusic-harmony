@@ -104,7 +104,14 @@ export default {
       return byAppleMusic;
     },
   },
+  mounted() {
+    // 首次进入页面时加载数据，确保使用自定义 API
+    // 注意：对于 keep-alive 组件，首次进入时也会调用 activated，但为了确保数据加载，这里也调用一次
+    // 由于 loadData 内部有防重复逻辑（通过 show 标志），多次调用不会造成问题
+    this.loadData();
+  },
   activated() {
+    // 从缓存中激活时也加载数据
     this.loadData();
     this.$parent.$refs.scrollbar.restorePosition();
   },
