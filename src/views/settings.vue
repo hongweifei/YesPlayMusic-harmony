@@ -1870,11 +1870,10 @@ input.text-input {
   font-size: 16px;
 
   @media (max-width: 767px) {
-    width: 100%;
     margin-right: 0;
     margin-bottom: 8px;
     padding: 10px 12px;
-    min-height: 44px;
+    min-height: 2rem;
   }
 }
 input::-webkit-outer-spin-button,
@@ -1911,10 +1910,6 @@ input[type='number'] {
   input.text-input {
     flex: 1;
     min-width: 200px;
-
-    @media (max-width: 767px) {
-      min-width: 100%;
-    }
   }
   button {
     white-space: nowrap;
