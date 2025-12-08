@@ -1,0 +1,12 @@
+{
+  "string" : [
+    {
+      "name": "title",
+      "value": "标题栏"
+    },
+    {
+      "name": "module_desc",
+      "value": "YesPlayMusic"
+    }
+  ]
+}
