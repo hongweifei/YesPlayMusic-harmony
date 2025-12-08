@@ -171,6 +171,11 @@ export default {
 
   @media (max-width: 767px) {
     margin-top: 24px;
+
+    // 最后一个区块添加额外的底部间距，确保内容不被播放器遮挡
+    &:last-child {
+      margin-bottom: 20px;
+    }
   }
 }
 .index-row.first-row {

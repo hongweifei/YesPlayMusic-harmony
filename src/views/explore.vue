@@ -338,6 +338,7 @@ h1 {
 
   @media (max-width: 767px) {
     margin-top: 16px;
+    margin-bottom: 20px; // 确保内容不被播放器遮挡
   }
 }
 
@@ -348,6 +349,7 @@ h1 {
 
   @media (max-width: 767px) {
     margin-top: 24px;
+    margin-bottom: 20px; // 确保内容不被播放器遮挡
   }
 }
 

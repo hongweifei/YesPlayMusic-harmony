@@ -365,11 +365,11 @@ main {
 // 移动端布局调整
 @media (max-width: 767px) {
   main {
-    padding: 0 16px 120px 16px; // 底部为播放器(60px)+底部导航栏(60px)预留空间
+    padding: 0 16px 124px 16px; // 底部为播放器(64px)+底部导航栏(60px)预留空间
     padding-top: env(safe-area-inset-top, 0); // 适配刘海屏
     padding-bottom: calc(
-      120px + env(safe-area-inset-bottom, 0)
-    ); // 底部安全区域
+      124px + env(safe-area-inset-bottom, 0)
+    ); // 底部安全区域：播放器64px + 导航栏60px = 124px
   }
 }
 
