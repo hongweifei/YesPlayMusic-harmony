@@ -2,8 +2,8 @@
   "app": {
     "bundleName": "io.gitee.hongweifei.yesplaymusic",
     "vendor": "hongweifei",
-    "versionCode": 1000000,
-    "versionName": "1.0.0",
+    "versionCode": 40010,
+    "versionName": "0.4.10",
     "icon": "$media:icon",
     "label": "$string:app_name"
   }

@@ -63,6 +63,8 @@
 
 ## 📦️ 安装
 
+鸿蒙版下载 [Releases](https://github.com/hongweifei/YesPlayMusic-harmony/releases)
+
 Electron 版本由 [@hawtim](https://github.com/hawtim) 和 [@qier222](https://github.com/qier222) 适配并维护，支持 macOS、Windows、Linux。
 
 访问本项目的 [Releases](https://github.com/qier222/YesPlayMusic/releases)
